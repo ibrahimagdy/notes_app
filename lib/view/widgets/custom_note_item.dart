@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notes_app/cubit/fetch_note_cubit/fetch_note_cubit.dart';
 import 'package:notes_app/model/note_model.dart';
 import 'package:notes_app/view/edit_note_view.dart';
 
@@ -13,7 +15,9 @@ class CustomNoteItem extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return const EditNoteView();
+            return EditNoteView(
+              noteModel: note,
+            );
           },
         ));
       },
@@ -46,7 +50,10 @@ class CustomNoteItem extends StatelessWidget {
                 ),
               ),
               trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  note.delete();
+                  BlocProvider.of<FetchNoteCubit>(context).fetchNote();
+                },
                 icon: const Icon(
                   Icons.delete,
                   color: Colors.black,
