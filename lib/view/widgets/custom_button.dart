@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants.dart';
 
-class CustomButton extends StatelessWidget{
+class CustomButton extends StatelessWidget {
   final void Function()? onTap;
-  const CustomButton({super.key, required this.onTap});
+  final bool isLoading;
+
+  const CustomButton({super.key, required this.onTap, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +20,16 @@ class CustomButton extends StatelessWidget{
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
-          child: Text(
-              'Add',
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              )
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator(color: Colors.black,)
+              : Text(
+                  'Add',
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
         ),
       ),
     );

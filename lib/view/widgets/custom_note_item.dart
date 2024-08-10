@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notes_app/model/note_model.dart';
 import 'package:notes_app/view/edit_note_view.dart';
 
 class CustomNoteItem extends StatelessWidget {
-  const CustomNoteItem({super.key});
+  final NoteModel note;
+  const CustomNoteItem({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomNoteItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: const Color(0xffffb100),
+          color: Color(note.color),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -26,7 +28,7 @@ class CustomNoteItem extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                'Flutter tips',
+                note.title,
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   color: Colors.black,
@@ -36,7 +38,7 @@ class CustomNoteItem extends StatelessWidget {
               subtitle: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'Build your career with hima',
+                  note.content,
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: Colors.black.withOpacity(0.5),
@@ -54,7 +56,7 @@ class CustomNoteItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 30),
               child: Text(
-                '1 Dec, 2024',
+                note.date,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   color: Colors.black,
