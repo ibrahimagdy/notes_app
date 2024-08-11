@@ -6,8 +6,9 @@ import 'package:notes_app/view/widgets/custom_app_bar.dart';
 import 'package:notes_app/view/widgets/custom_text_form_field.dart';
 import 'package:notes_app/view/widgets/edit_colors_list_view.dart';
 
-class EditNoteView extends StatefulWidget{
+class EditNoteView extends StatefulWidget {
   final NoteModel noteModel;
+
   const EditNoteView({super.key, required this.noteModel});
 
   @override
@@ -15,7 +16,20 @@ class EditNoteView extends StatefulWidget{
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
-  String? title,content;
+  String? title, content;
+
+  void showEditNoteMessage(String message) {
+    final snackBar = SnackBar(
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+      )),
+      backgroundColor: const Color(0xfff8ec04),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,26 +39,30 @@ class _EditNoteViewState extends State<EditNoteView> {
           child: Column(
             children: [
               CustomAppBar(
-                onPressed: (){
+                onPressed: () {
                   widget.noteModel.title = title ?? widget.noteModel.title;
-                  widget.noteModel.content = content ?? widget.noteModel.content;
+                  widget.noteModel.content =
+                      content ?? widget.noteModel.content;
                   widget.noteModel.save();
                   BlocProvider.of<FetchNoteCubit>(context).fetchNote();
                   Navigator.pop(context);
+                  showEditNoteMessage(
+                    'Note Edited Successfully',
+                  );
                 },
                 title: 'Edit Note',
                 icon: Icons.check,
               ),
               const SizedBox(height: 50),
               CustomTextFormField(
-                onChanged: (value){
+                onChanged: (value) {
                   title = value;
                 },
                 hint: widget.noteModel.title,
               ),
               const SizedBox(height: 16),
               CustomTextFormField(
-                onChanged: (value){
+                onChanged: (value) {
                   content = value;
                 },
                 hint: widget.noteModel.content,
